@@ -6,6 +6,7 @@ import { SalesModule } from './sales/sales.module';
 import { AuthorsModule } from './authors/authors.module';
 import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -14,13 +15,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     SalesModule,
     ClientsModule,
 
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'bh6z5c69loepazaeabwp-mysql.services.clever-cloud.com',
-      port: 3306,
-      username: 'uqgstmdemro7ohwb',
-      password: 'GC9QpGk5DIf21tmSL2iK',
-      database: 'bh6z5c69loepazaeabwp',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,
       retryDelay: 3000,
